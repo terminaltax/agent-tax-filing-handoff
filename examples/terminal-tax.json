@@ -1,0 +1,73 @@
+{
+  "$schema": "https://raw.githubusercontent.com/terminaltax/agent-tax-filing-handoff/main/schema/tax-filing.schema.json",
+  "specVersion": "0.1",
+  "spec": "https://github.com/terminaltax/agent-tax-filing-handoff",
+  "provider": {
+    "name": "Terminal Tax",
+    "operator": "Terminal Tax LLC, a New Jersey limited liability company",
+    "website": "https://terminal.tax",
+    "about": "https://terminal.tax/about",
+    "support": "mailto:support@terminal.tax",
+    "privacyNotice": "https://terminal.tax/privacy",
+    "terms": "https://terminal.tax/terms"
+  },
+  "filing": [
+    {
+      "country": "US",
+      "authority": "IRS",
+      "channel": "MeF",
+      "level": "federal",
+      "taxYears": [
+        2025
+      ],
+      "returnTypes": [
+        "1040",
+        "1040-SR",
+        "1040-SS",
+        "1040-NR"
+      ],
+      "amended": false,
+      "scope": "https://terminal.tax/llms.txt"
+    }
+  ],
+  "handoff": {
+    "transport": "mcp-streamable-http",
+    "endpoint": "https://mcp.terminal.tax/v1/hosted-mcp",
+    "mcpProtocolVersions": [
+      "2025-11-25"
+    ],
+    "authentication": "none",
+    "directJsonRpc": true,
+    "operations": {
+      "start": "create_filing_session",
+      "schema": "get_packet_schema",
+      "submit": "continue_filing_session"
+    }
+  },
+  "taxpayerPage": {
+    "linkIssued": "after-complete-packet",
+    "privacyNoticeOnPage": true,
+    "agentRelayedConsentAccepted": false,
+    "possessionCode": true,
+    "reviewCompleteReturn": true,
+    "signature": "self-select-pin",
+    "protectedValuesFromAgent": "refused"
+  },
+  "agentReceives": [
+    "continuationHandle",
+    "packetSchema",
+    "blockers",
+    "filingSessionUrl"
+  ],
+  "outcomeDelivery": "provider-to-taxpayer",
+  "payment": {
+    "cardEntry": "processor-hosted-fields",
+    "capture": "after-acceptance"
+  },
+  "documentation": {
+    "llmsTxt": "https://terminal.tax/llms.txt",
+    "guide": "https://terminal.tax/integrations",
+    "mcpServerCard": "https://terminal.tax/.well-known/mcp/server-card.json"
+  },
+  "notice": "Terminal Tax is not affiliated with, sponsored by, or endorsed by the IRS or the U.S. Treasury."
+}

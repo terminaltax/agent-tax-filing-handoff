@@ -1,0 +1,253 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/terminaltax/agent-tax-filing-handoff/main/schema/tax-filing.schema.json",
+  "title": "Agent Tax Filing Handoff discovery document (/.well-known/tax-filing.json)",
+  "type": "object",
+  "required": [
+    "specVersion",
+    "provider",
+    "filing",
+    "handoff",
+    "taxpayerPage",
+    "agentReceives",
+    "outcomeDelivery"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "specVersion": {
+      "const": "0.1"
+    },
+    "spec": {
+      "type": "string",
+      "format": "uri"
+    },
+    "provider": {
+      "type": "object",
+      "required": [
+        "name",
+        "website",
+        "support",
+        "privacyNotice",
+        "terms"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operator": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string",
+          "format": "uri"
+        },
+        "about": {
+          "type": "string",
+          "format": "uri"
+        },
+        "support": {
+          "type": "string",
+          "format": "uri"
+        },
+        "privacyNotice": {
+          "type": "string",
+          "format": "uri"
+        },
+        "terms": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "filing": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "country",
+          "authority",
+          "level",
+          "taxYears",
+          "returnTypes"
+        ],
+        "properties": {
+          "country": {
+            "type": "string",
+            "pattern": "^[A-Z]{2}$"
+          },
+          "authority": {
+            "type": "string"
+          },
+          "channel": {
+            "type": "string"
+          },
+          "level": {
+            "enum": [
+              "federal",
+              "state",
+              "local"
+            ]
+          },
+          "taxYears": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "minItems": 1
+          },
+          "returnTypes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1
+          },
+          "amended": {
+            "type": "boolean"
+          },
+          "scope": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      }
+    },
+    "handoff": {
+      "type": "object",
+      "required": [
+        "transport",
+        "endpoint",
+        "authentication",
+        "operations"
+      ],
+      "properties": {
+        "transport": {
+          "const": "mcp-streamable-http"
+        },
+        "endpoint": {
+          "type": "string",
+          "format": "uri"
+        },
+        "mcpProtocolVersions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "authentication": {
+          "enum": [
+            "none",
+            "oauth"
+          ]
+        },
+        "operations": {
+          "type": "object",
+          "required": [
+            "start",
+            "schema",
+            "submit"
+          ],
+          "properties": {
+            "start": {
+              "type": "string"
+            },
+            "schema": {
+              "type": "string"
+            },
+            "submit": {
+              "type": "string"
+            }
+          }
+        },
+        "directJsonRpc": {
+          "type": "boolean"
+        }
+      }
+    },
+    "taxpayerPage": {
+      "type": "object",
+      "required": [
+        "linkIssued",
+        "privacyNoticeOnPage",
+        "agentRelayedConsentAccepted",
+        "signature",
+        "protectedValuesFromAgent"
+      ],
+      "properties": {
+        "linkIssued": {
+          "const": "after-complete-packet"
+        },
+        "privacyNoticeOnPage": {
+          "const": true
+        },
+        "possessionCode": {
+          "type": "boolean"
+        },
+        "reviewCompleteReturn": {
+          "type": "boolean"
+        },
+        "signature": {
+          "type": "string"
+        },
+        "protectedValuesFromAgent": {
+          "const": "refused"
+        },
+        "agentRelayedConsentAccepted": {
+          "const": false
+        }
+      }
+    },
+    "agentReceives": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "continuationHandle",
+          "packetSchema",
+          "blockers",
+          "filingSessionUrl"
+        ]
+      }
+    },
+    "outcomeDelivery": {
+      "const": "provider-to-taxpayer"
+    },
+    "payment": {
+      "type": "object",
+      "properties": {
+        "cardEntry": {
+          "const": "processor-hosted-fields"
+        },
+        "capture": {
+          "enum": [
+            "after-acceptance",
+            "before-transmission"
+          ]
+        }
+      }
+    },
+    "documentation": {
+      "type": "object",
+      "properties": {
+        "llmsTxt": {
+          "type": "string",
+          "format": "uri"
+        },
+        "guide": {
+          "type": "string",
+          "format": "uri"
+        },
+        "mcpServerCard": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "notice": {
+      "type": "string"
+    }
+  }
+}
