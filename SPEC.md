@@ -102,7 +102,7 @@ A provider SHOULD serve a JSON document at `https://<provider-host>/.well-known/
 | `specVersion` | yes | The ATFH version, `"0.1"`. |
 | `spec` | no | A URL of this document. |
 | `provider` | yes | `name`, and URLs for `website`, `support`, `privacyNotice`, `terms`; MAY add `operator`, `about`. |
-| `filing` | yes | Array of what the provider files: `country` (ISO 3166-1 alpha-2), `authority`, `channel`, `level` (`federal`, `state`, `local`), `taxYears`, `returnTypes`, `amended`, `scope` (URL of the full scope). |
+| `filing` | yes | Array of what the provider files: `country` (ISO 3166-1 alpha-2), `authority`, `channel`, `level` (`federal`, `state`, `local`); MAY add `taxYears`, `returnTypes`, `amended`, `scope` (URL of the full scope). A provider that checks each return's scope when it is submitted (section 5.3, blockers) MAY omit them. |
 | `handoff` | yes | `transport` (`mcp-streamable-http` in this version), `endpoint`, `mcpProtocolVersions`, `authentication` (`none` or `oauth`), `directJsonRpc` (optional, section 5), and `operations` mapping `start`, `schema` and `submit` to tool names. |
 | `taxpayerPage` | yes | The provider's statements about R2 to R5: `linkIssued`, `privacyNoticeOnPage`, `agentRelayedConsentAccepted` (always false), `possessionCode`, `reviewCompleteReturn`, `signature`, `protectedValuesFromAgent`. |
 | `agentReceives` | yes | The list of items the agent can receive (R7). |
