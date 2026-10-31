@@ -193,8 +193,7 @@ If this document gains independent implementations, its editors intend to reques
 
 ## 9. Reference implementation
 
-Terminal Tax implements this draft: discovery at https://terminal.tax/.well-known/tax-filing.json (served from
-Terminal Tax's first production release after 2026-10-23; until then that URL can return 404), the endpoint
+Terminal Tax implements this draft: discovery at https://terminal.tax/.well-known/tax-filing.json, the endpoint
 https://mcp.terminal.tax/v1/hosted-mcp, and tools `create_filing_session` (start), `get_packet_schema`
 (schema) and `continue_filing_session` (submit). Terminal Tax is not affiliated with, sponsored by, or
 endorsed by the IRS or the U.S. Treasury, and nothing here is published, reviewed or endorsed by the IRS.
